@@ -1,0 +1,325 @@
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 30px;
+    padding: 25px 0 15px 20px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+}
+
+.create-btn {
+    opacity: 100%;
+    transition: opacity 0.3s;
+}
+
+.create-btn:hover {
+    opacity: 85%;
+    transition: opacity 0.3s;
+}
+
+.plus-sign {
+    font-size: 30px;
+    font-family: "Roboto";
+    font-weight: 300;
+}
+
+.filter-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.table-name {
+    font-size: 45px;
+    font-family: 'Roboto';
+    font-weight: 300;
+    color: var(--text-color);
+    padding-right: 30px;
+}
+
+.chips-state {
+    margin-left: 18px;
+    padding-bottom: 20px;
+
+}
+
+.chips-state .mat-standard-chips {
+    padding: 7px 9px;
+    min-height: 24px;
+    color: white;
+    background: #3f51b5c0;
+}
+
+.chips-filter-count {
+    margin-left: 15px;
+}
+
+.filter-count-visible {
+    opacity: 100%;
+    pointer-events: visible;
+    transition: opacity 0.3s, box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);;
+}
+
+.filter-count-hidden {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);;
+}
+
+.chips-state-text {
+    font-family: "Roboto";
+    font-size: 13px;
+    font-weight: 200;
+}
+
+.black {
+    color: white;
+}
+
+.blue {
+    color: white;
+}
+
+.yellow {
+    color: black;
+}
+
+.table-operations {
+    display: flex;
+    margin: 10px 15px 15px 15px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.table-operations-menu-text {
+    font-size: 14px;
+}
+
+.selection-btn {
+    width: 140px;
+}
+
+.amount-selected {
+    color: var(--primary);
+}
+
+.amount-selected-container {
+    position: absolute;
+    bottom: 9px;
+    left: 24px;
+    padding: 0;
+    pointer-events: none;
+}
+
+.view-content-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    flex-grow: 1;
+    height: 500px;
+    position: relative;
+    z-index: 1;
+}
+
+.table-container {
+    // display: flex;
+    // flex: 1;
+    // min-height: 500px;
+    // position: relative;
+    position: absolute;
+    top: 0;
+    bottom: 56px;
+    left: 0;
+    right: 0;
+    overflow: hidden scroll;
+}
+
+#element::-webkit-scrollbar {
+    display: none;
+}
+
+table {
+    width: 100%;
+    // position: absolute;
+    // left: 0;
+    // right: 0;
+    // top: 0;
+    // bottom: 0;
+}
+
+.mat-mdc-paginator {
+    position: relative;
+}
+
+.action-field {
+    opacity: 0%;
+    pointer-events: none;
+    transition: opacity 0.2s;
+
+    font-weight: 200;
+}
+
+.mat-table {
+    background: #f7f7f7;
+}
+
+.mdc-data-table__row {
+    height: 56px !important;
+    transition: background 0.2s;
+}
+
+.mdc-data-table__row:hover {
+    background: #eeeeee;
+    transition: background 0.2s;
+}
+
+.mdc-data-table__row:hover > .mdc-data-table__cell .action-field {
+    pointer-events: visible;
+    opacity: 100%;
+    transition: opacity 0.2s;
+    font-weight: 200;
+}
+
+th.mat-sort-header-sorted {
+    color: var(--black);
+}
+
+::ng-deep .dialog-style {
+    mat-dialog-content {
+        min-height: 150px;
+        min-width: 400px;
+    }
+
+}
+
+::-webkit-scrollbar-track {
+    background-color: #f7f7f7;
+}
+
+::ng-deep {
+    .mat-sort-header-content {
+        font-weight: 400 !important;
+    }
+}
+
+.opt-object-container {
+    display: flex;
+    align-items: center;
+    margin: 10px 10px 0px 20px;
+    gap: 20px;
+}
+
+.chart-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0 50px 0;
+
+    & canvas {
+        margin: 0 15%;
+    }
+}
+
+.power-amount {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+
+    opacity: 0;
+    pointer-events: none;
+    // transition: opacity 0.2s;
+
+    & button {
+        font-size: 23px;
+    }
+}
+
+.power-visible {
+    opacity: 1;
+    pointer-events: initial;
+    transition: opacity 0.2s;
+}
+
+.lines {
+    padding-top: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    position: relative;
+    z-index: 3;
+    background: var(--background-color);
+
+    & .primary-line {
+        border-top: 8px solid var(--primary-color);
+    }
+
+    & .accent-line {
+        border-top: 8px solid var(--accent-color);
+    }
+
+    & .warn-line {
+        border-top: 8px solid var(--warn-color);
+    }
+}
+
+.result-container {
+    padding: 80px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 200px;
+    position: relative;
+    z-index: 2;
+    background: var(--background-color);
+}
+
+.h {
+    height: 250px !important;
+    margin-bottom: 30px;
+}
+
+.spinner-container {
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.result-price-container {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+
+    margin: 190px 0 220px 0;
+    min-height: 400px;
+    width: 100%;
+
+    background: antiquewhite;
+}
+
+.result-price {
+    font-size: 20px;
+    font-family: "Roboto";
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+.cringe {
+    font-size: 20px;
+    font-family: "Roboto";
+    font-weight: 500;
+    color: var(--primary-color);
+}

@@ -1,0 +1,63 @@
+.show-chips-count {
+    opacity: 100%;
+    transition: opacity 0.3s;
+    visibility: visible;
+}
+
+.hide-chips-count {
+    opacity: 0%;
+    transition: opacity 0.3s;
+    visibility: visible;
+}
+
+mat-chip-option {
+    cursor: pointer;
+    transition: color 0.3s, background 0.3s;
+}
+
+.mat-chip-option.mat-standard-chips {
+    transition: color 0.3s, background 0.3s;
+}
+
+.primary-chips {
+    color: white !important;
+    background: #3f51b5c0  !important;
+    transition: color 0.3s, background 0.3s !important;
+}
+
+.base-chips {
+    color: rgba(0, 0, 0, 0.87) !important;
+    background: #e0e0e0 !important;
+    transition: color 0.3s, background 0.3s !important;
+}
+
+.primary-close {
+    color: white !important;
+    opacity: 40%;
+    transition: color 0.3s;
+}
+
+
+.primary-chips-count {
+    padding: 7px 8px;
+    min-height: 24px;
+    margin-right: 10px;
+
+    background: #3f51b5c0  !important;
+    transition: color 0.3s, background 0.3s;
+}
+
+.chips-count {
+    padding: 7px 8px;
+    min-height: 24px;
+    margin-right: 10px;
+}
+
+.primary-chips-count, .chips-count {
+    padding: 0 !important;
+}
+
+.mat-expansion-panel-header-title {
+    min-width: 160px;
+    font-weight: 400;
+}

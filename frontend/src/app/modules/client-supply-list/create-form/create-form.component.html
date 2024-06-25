@@ -1,0 +1,34 @@
+<div class="form-fields" [formGroup]="formGroupControl">
+
+    <mat-form-field class="create-form">
+
+        <mat-label>Название клиента</mat-label>
+
+        <mat-select formControlName="batteryId" cdkFocusInitial>
+            <mat-option *ngFor="let record of batteryList" [value]="record.id">
+                {{record.name}}
+            </mat-option>
+        </mat-select>
+
+        <mat-error *ngIf="formGroupControl.controls.batteryId.hasError('required')">
+            Необходимо заполнить это поле
+        </mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field class="create-form">
+
+        <mat-label>Название поставки</mat-label>
+
+        <mat-select formControlName="supplyId">
+            <mat-option *ngFor="let record of supplyList" [value]="record.id">
+                {{record.name}}
+            </mat-option>
+        </mat-select>
+
+        <mat-error *ngIf="formGroupControl.controls.supplyId.hasError('required')">
+            Необходимо заполнить это поле
+        </mat-error>
+
+    </mat-form-field>
+</div>

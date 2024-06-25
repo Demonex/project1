@@ -1,0 +1,40 @@
+<div class="router-container">
+
+    <div class="main-content" [ngClass]="!showContent ? 'hidden' : ''">
+
+        <app-base-table-view
+            class="base-table-view"
+            [tableName]="tableName"
+            [displayedColumns]="displayedColumns"
+            [dataSource]="dataSource"
+            [selection]="selection"
+            [filterComponent]="baseFilterComponent"
+            [saveDataFromDialog]="saveDataFromDialog"
+            [filterState]="+filterData?.state"
+            [filterCount]="filterCount"
+            (deleteRecords)="deleteRecords()"
+            (restoreRecords)="restoreRecords()"
+            (openDialog)="openDialog($event.row, $event.edit)">
+        </app-base-table-view>
+
+    </div>
+
+    <app-base-table-filter 
+        class="filter-sidenav"
+        [hidden]="!showContent"
+        [filterData]="filterData"
+        (reset)="resetFilters()"
+        (submit)="submitFilters()"
+        (state)="getState($event)">
+        <app-table-filter 
+            [filterData]="filterData" 
+            (filterProps)="getFilters($event)"
+            (filterCount)="filterCount = $event">
+        </app-table-filter>
+    </app-base-table-filter>
+
+    <div *ngIf="!showContent" class="spinner-container" >
+        <mat-spinner></mat-spinner>
+    </div>
+
+</div>

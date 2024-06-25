@@ -1,0 +1,84 @@
+<div class="form-fields" [formGroup]="formGroupControl">
+
+    <mat-form-field class="create-form">
+
+        <mat-label>Введите название</mat-label>
+
+        <input matInput formControlName="name" type="text" autocomplete="off" cdkFocusInitial>
+
+        <button tabindex="-1" *ngIf="curData.name" matSuffix mat-icon-button aria-label="Clear" (click)="clearField('name')">
+            <mat-icon>close</mat-icon>
+        </button>
+
+        <mat-error *ngIf="formGroupControl.controls.name.hasError('required')">
+            Необходимо заполнить это поле
+        </mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field class="create-form">
+
+        <mat-label>Введите код заказа</mat-label>
+
+        <input matInput formControlName="orderCode" type="text" autocomplete="off">
+
+        <button tabindex="-1" *ngIf="curData.orderCode" matSuffix mat-icon-button aria-label="Clear"
+            (click)="clearField('orderCode')">
+            <mat-icon>close</mat-icon>
+        </button>
+
+        <mat-error *ngIf="formGroupControl.controls.orderCode.hasError('required')">
+            Необходимо заполнить это поле
+        </mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field class="create-form">
+
+        <mat-label>Введите комментарий</mat-label>
+
+        <input matInput formControlName="comment" type="text" autocomplete="off">
+
+        <button tabindex="-1" *ngIf="curData.comment" matSuffix mat-icon-button aria-label="Clear" (click)="clearField('comment')">
+            <mat-icon>close</mat-icon>
+        </button>
+
+        <mat-error *ngIf="formGroupControl.controls.comment.hasError('required')">
+            Необходимо заполнить это поле
+        </mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field class="create-form">
+
+        <mat-label>Название поставки</mat-label>
+
+        <mat-select formControlName="supplyId">
+            <mat-option *ngFor="let record of supplyList" [value]="record.id">
+                {{record.name}}
+            </mat-option>
+        </mat-select>
+
+        <mat-error *ngIf="formGroupControl.controls.supplyId.hasError('required')">
+            Необходимо заполнить это поле
+        </mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field class="create-form">
+
+        <mat-label>Название типа девайса</mat-label>
+
+        <mat-select formControlName="deviceTypeId">
+            <mat-option *ngFor="let record of deviceTypeList" [value]="record.id">
+                {{record.name}}
+            </mat-option>
+        </mat-select>
+
+        <mat-error *ngIf="formGroupControl.controls.deviceTypeId.hasError('required')">
+            Необходимо заполнить это поле
+        </mat-error>
+
+    </mat-form-field>
+
+</div>

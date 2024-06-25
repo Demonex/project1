@@ -1,0 +1,40 @@
+<div class="filter-container" [ngClass]="filterCollapsed ? 'hidden' : ''">
+    <div class="filter-content">
+
+        <div class="filter-fields">
+            <h1 class="filter-fields-header">Фильтры</h1>
+
+            <section class="mod-btn">
+                <mat-button-toggle-group [formControl]="filterStateControl">
+                    <mat-button-toggle value=1>Активные</mat-button-toggle>
+                    <mat-button-toggle value=2>Все</mat-button-toggle>
+                    <mat-button-toggle value=0>Архивные</mat-button-toggle>
+                </mat-button-toggle-group>
+            </section>
+            
+            <ng-content></ng-content>
+
+        </div>
+
+        <div class="filter-actions">
+            <div class="action-btn">
+                <button 
+                    mat-stroked-button 
+                    color="accent"
+                    (click)="resetFilters()">
+                    Сбросить
+                </button>
+            </div>
+
+            <div class="action-btn">
+                <button 
+                    mat-stroked-button 
+                    color="primary"
+                    (click)="submitFilters()">
+                    Применить
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>

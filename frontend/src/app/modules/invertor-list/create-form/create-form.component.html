@@ -1,0 +1,67 @@
+<div class="form-fields" [formGroup]="formGroupControl">
+
+    <mat-form-field class="create-form">
+
+        <mat-label>Введите название</mat-label>
+
+        <input matInput formControlName="name" type="text" autocomplete="off" cdkFocusInitial>
+
+        <button tabindex="-1" *ngIf="curData.name" matSuffix mat-icon-button aria-label="Clear" (click)="clearField('name')">
+            <mat-icon>close</mat-icon>
+        </button>
+
+        <mat-error *ngIf="formGroupControl.controls.name.hasError('required')">
+            Необходимо заполнить это поле
+        </mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field class="create-form">
+
+        <mat-label>Введите мощность</mat-label>
+
+        <input matInput formControlName="watt" type="text" autocomplete="off" cdkFocusInitial>
+
+        <button tabindex="-1" *ngIf="curData.watt" matSuffix mat-icon-button aria-label="Clear" (click)="clearField('watt')">
+            <mat-icon>close</mat-icon>
+        </button>
+
+        <mat-error *ngIf="formGroupControl.controls.watt.hasError('required')">
+            Необходимо заполнить это поле
+        </mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field class="create-form">
+
+        <mat-label>Введите напряжение</mat-label>
+
+        <input matInput formControlName="volt" type="text" autocomplete="off" cdkFocusInitial>
+
+        <button tabindex="-1" *ngIf="curData.volt" matSuffix mat-icon-button aria-label="Clear" (click)="clearField('volt')">
+            <mat-icon>close</mat-icon>
+        </button>
+
+        <mat-error *ngIf="formGroupControl.controls.volt.hasError('required')">
+            Необходимо заполнить это поле
+        </mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field class="create-form">
+
+        <mat-label>Введите стоимость</mat-label>
+
+        <input matInput formControlName="price" type="text" autocomplete="off" cdkFocusInitial>
+
+        <button tabindex="-1" *ngIf="curData.price" matSuffix mat-icon-button aria-label="Clear" (click)="clearField('price')">
+            <mat-icon>close</mat-icon>
+        </button>
+
+        <mat-error *ngIf="formGroupControl.controls.price.hasError('required')">
+            Необходимо заполнить это поле
+        </mat-error>
+
+    </mat-form-field>
+
+</div>

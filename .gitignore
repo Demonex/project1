@@ -1,0 +1,13 @@
+backend/WebServices/DeliveryWebService/bin/*
+backend/WebServices/DeliveryWebService/obj/*
+backend/Database/DeliveryDatabase/bin/*
+backend/Database/DeliveryDatabase/obj/*
+backend/Common/BaseController/bin/*
+backend/Common/BaseController/obj/*
+backend/Common/DeliveryDbAutoMapper/bin/*
+backend/Common/DeliveryDbAutoMapper/obj/*
+backend/Common/Dto/bin/*
+backend/Common/Dto/obj/*
+*.dll
+*.sln
+**/.idea/

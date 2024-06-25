@@ -1,0 +1,109 @@
+.filter-container {
+    height: 100%;
+    width: 340px;
+    display: flex;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: width 0.3s;
+}
+
+.hidden {
+    width: 0;
+}
+
+.filter-content {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: inherit;
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.filter-fields {
+    padding: 0 20px;
+    min-width: 300px;
+}
+
+mat-slide-toggle {
+    padding: 5px 0 30px 20px;
+}
+
+.filter-fields-header {
+    font-family: "Roboto";
+    font-weight: 300;
+    padding-top: 26px;
+    padding-left: 21px;
+}
+
+.mod-btn {
+    width: 100%;
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.filter-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.action-btn {
+    text-align: center;
+    padding: 30px 0;
+}
+
+::ng-deep {
+    mat-expansion-panel {
+        box-shadow: none !important;
+    }
+    
+    mat-expansion-panel-header.mat-expanded {
+        height: 45px !important;
+    }
+
+    .mat-expansion-panel-body {
+        padding-bottom: 0 !important;
+        padding-right: 18px !important;
+    }
+
+    .mat-button-toggle-label-content {
+        padding: 0 16px !important;
+    }
+    
+    mat-button-toggle-group {
+        margin: 0 auto;
+        border: none !important;
+        border-radius: 0 !important;
+    }
+
+    mat-button-toggle {
+        border: none !important;
+        border-radius: 8px;
+    }
+
+    .mat-button-toggle-checked {
+        border-bottom: 3px solid var(--primary) !important;
+    }
+
+    .mat-content {
+        align-items: center;
+    }
+
+    .mat-expanded .mat-expansion-panel-header .mat-content .mat-expansion-panel-header-title {
+        color: var(--primary);
+        font-weight: 500;
+    } 
+
+    .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
+        min-width: 170px;
+        margin-right: 0 !important;
+    }
+}
+

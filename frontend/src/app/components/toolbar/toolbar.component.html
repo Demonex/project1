@@ -1,0 +1,12 @@
+<mat-toolbar color="primary" class="toolbar-content">
+
+    <div class="logo-company-name">
+        СОЛНЕЧНЫЙ ДОМ
+    </div>
+
+    <app-profile
+        [darkModeState]="darkModeState"
+        (darkModeSwitched)="onDarkModeSwitched($event)">
+    </app-profile>
+
+</mat-toolbar>

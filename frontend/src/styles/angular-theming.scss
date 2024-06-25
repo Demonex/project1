@@ -1,0 +1,24 @@
+@import './node_modules/@angular/material/_theming.scss';
+
+@include mat-core();
+
+$mat-theming-primary: mat-palette($mat-indigo);
+$mat-theming-accent: mat-palette($mat-pink, A200, A100, A400);
+
+$mat-theming-warn: mat-palette($mat-red);
+
+$mat-theming-theme: mat-light-theme($mat-theming-primary, $mat-theming-accent, $mat-theming-warn);
+$mat-theming-theme-dark: mat-dark-theme($mat-theming-primary, $mat-theming-accent, $mat-theming-warn);
+
+@import "../assets/scss/functions.scss";
+
+// You have to define one of those for every theme you offer
+.dark-theme {
+    @include angular-material-theme($mat-theming-theme-dark);
+    @include generate-theme-vars($mat-theming-theme-dark);
+}
+
+.light-theme {
+    @include angular-material-theme($mat-theming-theme);
+    @include generate-theme-vars($mat-theming-theme);
+}

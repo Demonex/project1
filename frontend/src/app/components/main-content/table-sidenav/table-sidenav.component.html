@@ -1,0 +1,81 @@
+<div class="record-container">
+    <mat-menu></mat-menu>
+    <div style="display: flex; flex-direction: column; justify-content: space-between; flex: 1;">
+        <div>
+            <div class="record" mat-menu-item [routerLink]="Links[i]" routerLinkActive #rla="routerLinkActive"
+                *ngFor="let item of Tables; let i = index;">
+
+                <div class="record-wtf">
+                    <span class="square-content" id="square"
+                        [ngClass]="{'square-content-checked': rla.isActive, 'marg-r16': true}">
+
+                        <div class="table-init-text">
+                            {{Names[i]}}
+                        </div>
+                    </span>
+
+                    <span class="table-name" [ngClass]="rla.isActive ? 'table-name-checked' : ''">
+                        {{item}}
+                    </span>
+
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+
+            <div class="record" mat-menu-item routerLink="optimization" routerLinkActive #rla="routerLinkActive">
+
+                <div class="record-wtf">
+                    <span class="square-content" id="square"
+                        [ngClass]="{'square-content-checked': rla.isActive, 'marg-r16': true}">
+
+                        <div class="table-init-text">
+                            <mat-icon style="margin: 0">settings</mat-icon>
+                        </div>
+                    </span>
+
+                    <span class="table-name" [ngClass]="rla.isActive ? 'table-name-checked' : ''">
+                        Приборы
+                    </span>
+
+                </div>
+            </div>
+
+
+            <div class="record" mat-menu-item routerLink="history" routerLinkActive #rla2="routerLinkActive">
+
+                <div class="record-wtf">
+                    <span class="square-content" id="square"
+                        [ngClass]="{'square-content-checked': rla2.isActive, 'marg-r16': true}">
+
+                        <div class="table-init-text">
+                            <mat-icon style="margin: 0">history</mat-icon>
+                        </div>
+                    </span>
+
+                    <span class="table-name" [ngClass]="rla2.isActive ? 'table-name-checked' : ''">
+                        История
+                    </span>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div mat-menu-item class="collapse-container" (click)="toggleSidenav()">
+
+        <div class="collapse-container-wtf">
+            <span class="arrow-collapse">
+                <img [ngClass]="{'rotate-arrow180': !collapsed, 'rotate-arrow360': collapsed}"
+                    src="assets/svg/double-arrow.svg" width="19px">
+            </span>
+
+            <span class="arrow-hint">
+                Свернуть
+            </span>
+        </div>
+
+    </div>
+</div>

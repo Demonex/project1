@@ -1,0 +1,15 @@
+.settings {
+    display: flex;
+}
+
+.settings-btn {
+    cursor: pointer;
+}
+
+::ng-deep .dialog-style {
+    mat-dialog-content {
+        min-height: 150px !important;
+        min-width: 400px !important;
+    }
+
+}

@@ -1,0 +1,8 @@
+<div class="settings">
+    <mat-icon class="settings-btn" [matMenuTriggerFor]='menu'>settings</mat-icon>
+</div>
+
+<mat-menu #menu='matMenu'>
+    <button mat-menu-item (click)="openDialog()">Настройки</button>
+    <button mat-menu-item>Выйти</button>
+</mat-menu>

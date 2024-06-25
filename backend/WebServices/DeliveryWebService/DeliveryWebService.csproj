@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="10.1.1" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.0-preview.3.21201.2">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.OpenApi" Version="1.6.4" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+        <PackageReference Include="NLog.Web.AspNetCore" Version="4.12.0" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.0-preview3" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
+    </ItemGroup>
+
+    <ItemGroup>    
+      <ProjectReference Include="..\..\Common\BaseController\BaseController.csproj" />
+    
+      <ProjectReference Include="..\..\Common\DeliveryDbAutoMapper\DeliveryDbAutoMapper.csproj" />
+    
+      <ProjectReference Include="..\..\Common\Dto\DTO.csproj" />
+    
+      <ProjectReference Include="..\..\Database\DeliveryDatabase\DeliveryDatabase.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="BaseController">
+        <HintPath>..\..\Common\BaseController\bin\Debug\net5.0\BaseController.dll</HintPath>
+      </Reference>
+      <Reference Include="DeliveryDbAutoMapper">
+        <HintPath>..\..\Common\DeliveryDbAutoMapper\bin\Debug\net5.0\DeliveryDbAutoMapper.dll</HintPath>
+      </Reference>
+      <Reference Include="DTO">
+        <HintPath>..\..\Common\Dto\bin\Debug\net5.0\DTO.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+</Project>

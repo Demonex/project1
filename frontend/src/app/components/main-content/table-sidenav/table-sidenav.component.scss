@@ -1,0 +1,102 @@
+.record-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.record {
+    margin-top: 16px;
+}
+
+.record-wtf {
+    display: flex;
+    align-items: center;
+}
+
+.square-content {
+    transition: background 0.3s;
+    display: flex;
+}
+
+.table-init-text {
+    margin: auto;
+    height: inherit;
+    display: flex;
+    align-items: center;
+}
+
+.table-name {
+    font-weight: 300;
+    font-size: 17px;
+    font-family: "Roboto";
+    width: 160px;
+    color: var(--text-color);
+}
+
+#square {
+    min-width: 35px;
+    min-height: 30px;
+    height: 35px;
+    background: var(--disabled-button-color);
+    margin-right: 16px;
+    border-radius: 10px;
+}
+
+
+
+
+.record:hover .record-wtf > .square-content {
+    background: var(--primary) !important;
+    color: var(--light) !important;
+}
+
+.record:hover .record-wtf > .table-name {
+    color: var(--primary) !important
+}
+
+.square-content-checked {
+    background: var(--primary) !important;
+    color: var(--light) !important;
+}
+
+.table-name-checked {
+    color: var(--primary) !important;
+    font-weight: 500;
+}
+
+
+
+.collapse-container {
+    height: 57px;
+    border-top: solid 1px var(--divider-color);
+}
+
+.collapse-container-wtf {
+    display: flex;
+    align-items: center;
+}
+
+
+.arrow-collapse {
+    display: flex;
+    padding-left: 9px;
+}
+
+.arrow-hint {
+    font-weight: 300;
+    font-size: 17px;
+    font-family: "Roboto";
+    padding-left: 23px;
+    color: var(--text-color);
+}
+
+.rotate-arrow180 {
+    transform: rotate(180deg);
+    transition: transform 0.5s;
+}
+
+.rotate-arrow360 {
+    transform: rotate(360deg);
+    transition: transform 0.5s;
+}

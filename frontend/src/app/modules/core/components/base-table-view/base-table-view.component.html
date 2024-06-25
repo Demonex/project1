@@ -1,0 +1,731 @@
+<div class="header-container">
+    <div class="header">
+        <div class="table-name">{{tableName}}</div>
+        <button
+            mat-mini-fab
+            color="primary"
+            (click)="openCreateDialog(saveDataFromDialog)">
+            <div class="plus-sign">
+                +
+            </div>
+        </button>
+    </div>
+
+    <button
+        class="filter-btn"
+        [matBadge]="filterCount" matBadgeColor="accent" matBadgeOverlap="true" [matBadgeHidden]="!filterComponent?.filterCollapsed || filterCount === 0"
+        mat-raised-button
+        color="base"
+        (click)="toggleFilters()">
+        <mat-icon style="margin: 0 !important;" *ngIf="filterComponent?.filterCollapsed">filter_alt</mat-icon>
+        <span style="display: flex;">
+            <img *ngIf="!filterComponent?.filterCollapsed" src="assets/svg/double-arrow.svg" width="17px"/>
+        </span>
+    </button>
+
+</div>
+
+<div class="chips-state">
+
+    <mat-chip-option
+        selected color="primary" *ngIf="filterState === 1" class="chips-state-text blue">
+        Только активные записи
+    </mat-chip-option>
+
+    <mat-chip-option
+        selected color="warn" *ngIf="filterState === 2" class="chips-state-text yellow">
+        Все записи
+    </mat-chip-option>
+
+    <mat-chip-option
+        selected color="basic" *ngIf="filterState === 0" class="chips-state-text black">
+        Только архивные записи
+    </mat-chip-option>
+
+    <mat-chip-option
+        [ngClass]="{'chips-filter-count': true, 'filter-count-hidden': filterCount < 1, 'filter-count-visible': filterCount > 0}"
+        color="accent"
+        selected>
+        <span class="chips-state-text">
+            Фильтры применены
+        </span>
+    </mat-chip-option>
+</div>
+
+
+<div *ngIf="optObj" class="chart-container">
+    <canvas baseChart class="chart"
+        [data]="barChartData"
+        [options]="barChartOptions"
+        [plugins]="barChartPlugins"
+        [type]="barChartType"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)">
+    </canvas>
+</div>
+
+<div *ngIf="optObj" [ngClass]="{'power-amount': true, 'power-visible': powerAmountNeeded !== 0}">
+    <button mat-stroked-button color="primary" (click)="powerClickHandler()">
+        {{powerAmountNeeded / 1000 | number : '.2-2'}} кВт*ч
+    </button>
+</div>
+
+
+<div *ngIf="optObj" class="opt-object-container">
+    <div class="" [formGroup]="formGroupControl">
+
+        <mat-form-field class="create-form">
+
+            <mat-label>Введите площадь крыши (м2)</mat-label>
+
+            <input matInput formControlName="area" type="text" autocomplete="off" cdkFocusInitial>
+
+            <button tabindex="-1" *ngIf="optObj.area" matSuffix mat-icon-button aria-label="Clear" (click)="clearField('area')">
+                <mat-icon>close</mat-icon>
+            </button>
+
+            <mat-error *ngIf="formGroupControl.controls.area.hasError('required')">
+                Необходимо заполнить это поле
+            </mat-error>
+
+        </mat-form-field>
+    </div>
+
+    <div class="" [formGroup]="formGroupControl">
+
+        <mat-form-field class="create-form">
+
+            <mat-label>Введите регион</mat-label>
+
+            <mat-select formControlName="region">
+                <mat-option *ngFor="let region of regionList; let i = index" [value]="i + 1">
+                    {{region}}
+                </mat-option>
+            </mat-select>
+
+            <mat-error *ngIf="formGroupControl.controls.region.hasError('required')">
+                Необходимо заполнить это поле
+            </mat-error>
+
+        </mat-form-field>
+    </div>
+
+    <div class="" [formGroup]="formGroupControl">
+
+        <mat-form-field class="create-form">
+
+            <mat-label>Учитывать зимнее время года?</mat-label>
+
+            <mat-select formControlName="winterSeason">
+                <mat-option [value]="false">
+                    Нет
+                </mat-option>
+                <mat-option [value]="true">
+                    Да
+                </mat-option>
+            </mat-select>
+
+            <mat-error *ngIf="formGroupControl.controls.winterSeason.hasError('required')">
+                Необходимо заполнить это поле
+            </mat-error>
+
+        </mat-form-field>
+    </div>
+</div>
+
+<div class="table-operations">
+
+    <div>
+        <button mat-button
+            color="primary"
+            [disabled]="dataSource.data.length === 0"
+            [matMenuTriggerFor]='menu'>
+            Выделить...
+        </button>
+
+        <mat-menu #menu='matMenu'>
+            <div>
+                <button mat-menu-item
+                    *ngIf="!isAllPageSelected()"
+                    (click)="masterToggle()">
+                    <div class="table-operations-menu-text">
+                        Выделить на странице
+                    </div>
+                </button>
+
+                <button mat-menu-item
+                    *ngIf="isAllPageSelected()"
+                    (click)="masterToggle()">
+                    <div class="table-operations-menu-text">
+                        Снять выделение на странице
+                    </div>
+                </button>
+            </div>
+            <div>
+                <button mat-menu-item
+                    *ngIf="selection.selected.length !== dataSource.data.length"
+                    (click)="selectAll()">
+                    <div class="table-operations-menu-text">
+                        Выделить всё
+                    </div>
+                </button>
+
+                <button mat-menu-item
+                    *ngIf="selection.selected.length === dataSource.data.length"
+                    (click)="deselectAll()">
+                    <div class="table-operations-menu-text">
+                        Снять выделение
+                    </div>
+                </button>
+            </div>
+        </mat-menu>
+
+        <button mat-button
+            *ngIf="filterState === 1"
+            [disabled]="!selection.selected.length"
+            color="accent"
+            (click)="openDeleteDialog(selection.selected)">
+            Удалить в архив
+        </button>
+
+        <button mat-button
+            *ngIf="filterState === 0"
+            [disabled]="!selection.selected.length"
+            color="accent"
+            (click)="openDeleteDialog(selection.selected)">
+            Удалить
+        </button>
+
+        <button mat-button
+            *ngIf="filterState === 0"
+            [disabled]="!selection.selected.length"
+            color="base"
+            (click)="openDeleteDialog(selection.selected, true)">
+            Восстановить
+        </button>
+
+    </div>
+
+</div>
+
+<div class="mat-elevation-z8 view-content-container">
+    <div class="table-container" id="element">
+        <table mat-table [dataSource]="dataSource" matSort>
+            <ng-container *ngFor="let col of displayedColumns" [matColumnDef]="col">
+
+                <ng-container *ngIf="col === 'select'">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <mat-checkbox
+                            [disabled]="dataSource.data.length === 0"
+                            (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllPageSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllPageSelected()"
+                            [aria-label]="checkboxLabel()">
+                        </mat-checkbox>
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <mat-checkbox
+                            (click)="$event.stopPropagation()"
+                            (change)="checkboxHandler($event, row)"
+                            [checked]="selection.isSelected(row)"
+                            [aria-label]="checkboxLabel(row)">
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <ng-container *ngIf="col === 'action'">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element">
+
+                        <div class="action-field">
+                            <button
+                                *ngIf="filterState === 1"
+                                mat-flat-button
+                                (click)="openEditDialog(element, true)"
+                                color="primary">
+                                Редактировать
+                            </button>
+                        </div>
+
+                        <div style="opacity: 0; pointer-events: none;" class="action-field">
+                            <button
+                                *ngIf="filterState === 2"
+                                mat-flat-button
+                                (click)="openEditDialog(element, true)"
+                                color="primary">
+                                Редактировать
+                            </button>
+                        </div>
+
+                        <div style="opacity: 0; pointer-events: none;" class="action-field">
+                            <button
+                                *ngIf="filterState === 0"
+                                mat-flat-button
+                                (click)="openEditDialog(element, true)"
+                                color="primary">
+                                Редактировать
+                            </button>
+                        </div>
+
+                    </td>
+                </ng-container>
+
+                <ng-container *ngIf="col === 'startDate' || col === 'endDate'; else nodate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{col | translate}}</th>
+                    <td mat-cell *matCellDef="let element">{{element[col] | date: 'dd.MM.yyyy'}}</td>
+                </ng-container>
+
+                <ng-container #nodate *ngIf="col !== 'action' && col !== 'select'">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{col | translate}}</th>
+                    <td mat-cell *matCellDef="let element">{{element[col]}}</td>
+                </ng-container>
+
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20, 50, 100, 1000]" showFirstLastButtons></mat-paginator>
+
+    <button mat-flat-button
+        color="basic"
+        class="amount-selected-container">
+        <div>
+            Всего выбрано <span class="amount-selected">
+                {{selection.selected.length}}
+            </span>
+        </div>
+    </button>
+</div>
+
+<div *ngIf="optObj" class="lines">
+    <div class="primary-line">
+
+    </div>
+    <div class="accent-line">
+
+    </div>
+    <div class="warn-line">
+
+    </div>
+</div>
+
+<div *ngIf="optObj" class="result-container">
+    <div class="result-accent-line">
+
+    </div>
+
+    <button mat-raised-button
+            [disabled]="!selection.selected.length"
+            (click)="optimizeBtnHandler()"
+            color="warn"
+            style="align-self: center; margin-bottom: 75px;">
+            Рассчитать необходимое оборудование
+    </button>
+
+    <div *ngIf="showCharts > -1 && showContent" class="result-price-container">
+        <img src="assets/svg/solar.png" width="250px"/>
+
+        <div class="result-price">
+            <mat-chip-option
+                *ngIf="showCharts > -1 && showContent"
+                selected [color]="panelPrice === -1 ? 'accent' : 'primary'" style="align-self: start; margin: 15px; height: 50px;" class="chips-state-text cringe black">
+                {{panelPrice === -1 ? 'Превышена допустимая площадь' : 'Затраты составили - ' + overallPrice}}
+            </mat-chip-option>
+            <!-- Затраты составили - {{overallPrice}} -->
+        </div>
+    </div>
+
+    <div *ngIf="showCharts > -1 && showContent" class="result-chart-container">
+        <div class="chart-container">
+            <canvas baseChart class="chart"
+                [data]="lineChartPanelData"
+                [options]="lineChartOptions"
+                [plugins]="barChartPlugins"
+                [type]="lineChartPanelType"
+                (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)">
+            </canvas>
+        </div>
+    </div>
+
+    <mat-chip-option
+        *ngIf="showCharts > -1 && showContent"
+        selected color="primary" style="align-self: start; margin: 15px;" class="chips-state-text blue">
+        Затраты на панели {{panelPrice}}
+    </mat-chip-option>
+
+    <div *ngIf="showCharts > -1 && showContent" class="view-content-container h">
+        <div class="table-container" id="element">
+            <table mat-table [dataSource]="dataSourcePanel" matSort>
+                <ng-container *ngFor="let col of displayedColumnsPanel" [matColumnDef]="col">
+
+                    <ng-container *ngIf="col === 'select'">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox
+                                [disabled]="dataSourcePanel.data.length === 0"
+                                (change)="$event ? masterToggle() : null"
+                                [checked]="selection.hasValue() && isAllPageSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllPageSelected()"
+                                [aria-label]="checkboxLabel()">
+                            </mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-checkbox
+                                (click)="$event.stopPropagation()"
+                                (change)="checkboxHandler($event, row)"
+                                [checked]="selection.isSelected(row)"
+                                [aria-label]="checkboxLabel(row)">
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                    <ng-container *ngIf="col === 'action'">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element">
+
+                            <div class="action-field">
+                                <button
+                                    *ngIf="filterState === 1"
+                                    mat-flat-button
+                                    (click)="openEditDialog(element, true)"
+                                    color="primary">
+                                    Редактировать
+                                </button>
+                            </div>
+
+                            <div style="opacity: 0; pointer-events: none;" class="action-field">
+                                <button
+                                    *ngIf="filterState === 2"
+                                    mat-flat-button
+                                    (click)="openEditDialog(element, true)"
+                                    color="primary">
+                                    Редактировать
+                                </button>
+                            </div>
+
+                            <div style="opacity: 0; pointer-events: none;" class="action-field">
+                                <button
+                                    *ngIf="filterState === 0"
+                                    mat-flat-button
+                                    (click)="openEditDialog(element, true)"
+                                    color="primary">
+                                    Редактировать
+                                </button>
+                            </div>
+
+                        </td>
+                    </ng-container>
+
+                    <ng-container *ngIf="col === 'startDate' || col === 'endDate'; else nodate">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{col | translate}}</th>
+                        <td mat-cell *matCellDef="let element">{{element[col] | date: 'dd.MM.yyyy'}}</td>
+                    </ng-container>
+
+                    <ng-container #nodate *ngIf="col !== 'action' && col !== 'select'">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{col | translate}}</th>
+                        <td mat-cell *matCellDef="let element">{{element[col]}}</td>
+                    </ng-container>
+
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsPanel; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsPanel;"></tr>
+            </table>
+        </div>
+
+
+    </div>
+
+    <div *ngIf="showCharts > -1 && showContent" class="result-chart-container">
+        <div class="chart-container">
+            <canvas baseChart class="chart"
+                [data]="barChartBatteryData"
+                [options]="barChartOptions"
+                [plugins]="barChartPlugins"
+                [type]="barChartType"
+                (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)">
+            </canvas>
+        </div>
+    </div>
+
+    <mat-chip-option
+        *ngIf="showCharts > -1 && showContent"
+        selected color="warn" style="align-self: start; margin: 15px;" class="chips-state-text yellow">
+        Затраты на аккумуляторы {{batteryPrice}}
+    </mat-chip-option>
+
+    <div *ngIf="showCharts > -1 && showContent" class="view-content-container h">
+        <div class="table-container" id="element">
+            <table mat-table [dataSource]="dataSourceBattery" matSort>
+                <ng-container *ngFor="let col of displayedColumnsBattery" [matColumnDef]="col">
+
+                    <ng-container *ngIf="col === 'select'">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox
+                                [disabled]="dataSourceBattery.data.length === 0"
+                                (change)="$event ? masterToggle() : null"
+                                [checked]="selection.hasValue() && isAllPageSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllPageSelected()"
+                                [aria-label]="checkboxLabel()">
+                            </mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-checkbox
+                                (click)="$event.stopPropagation()"
+                                (change)="checkboxHandler($event, row)"
+                                [checked]="selection.isSelected(row)"
+                                [aria-label]="checkboxLabel(row)">
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                    <ng-container *ngIf="col === 'action'">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element">
+
+                            <div class="action-field">
+                                <button
+                                    *ngIf="filterState === 1"
+                                    mat-flat-button
+                                    (click)="openEditDialog(element, true)"
+                                    color="primary">
+                                    Редактировать
+                                </button>
+                            </div>
+
+                            <div style="opacity: 0; pointer-events: none;" class="action-field">
+                                <button
+                                    *ngIf="filterState === 2"
+                                    mat-flat-button
+                                    (click)="openEditDialog(element, true)"
+                                    color="primary">
+                                    Редактировать
+                                </button>
+                            </div>
+
+                            <div style="opacity: 0; pointer-events: none;" class="action-field">
+                                <button
+                                    *ngIf="filterState === 0"
+                                    mat-flat-button
+                                    (click)="openEditDialog(element, true)"
+                                    color="primary">
+                                    Редактировать
+                                </button>
+                            </div>
+
+                        </td>
+                    </ng-container>
+
+                    <ng-container *ngIf="col === 'startDate' || col === 'endDate'; else nodate">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{col | translate}}</th>
+                        <td mat-cell *matCellDef="let element">{{element[col] | date: 'dd.MM.yyyy'}}</td>
+                    </ng-container>
+
+                    <ng-container #nodate *ngIf="col !== 'action' && col !== 'select'">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{col | translate}}</th>
+                        <td mat-cell *matCellDef="let element">{{element[col]}}</td>
+                    </ng-container>
+
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsBattery; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsBattery;"></tr>
+            </table>
+        </div>
+    </div>
+
+    <div *ngIf="showCharts > -1 && showContent" class="result-chart-container">
+        <div class="chart-container">
+            <canvas baseChart class="chart"
+                [data]="barChartInvertorData"
+                [options]="barChartOptions"
+                [plugins]="barChartPlugins"
+                [type]="barChartType"
+                (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)">
+            </canvas>
+        </div>
+    </div>
+
+    <mat-chip-option
+        *ngIf="showCharts > -1 && showContent"
+        selected color="accent" style="align-self: start; margin: 15px;" class="chips-state-text black">
+        Затраты на инверторы {{invertorPrice}}
+    </mat-chip-option>
+
+    <div *ngIf="showCharts > -1 && showContent" class="view-content-container h">
+        <div class="table-container" id="element">
+            <table mat-table [dataSource]="dataSourceInvertor" matSort>
+                <ng-container *ngFor="let col of displayedColumnsInvertor" [matColumnDef]="col">
+
+                    <ng-container *ngIf="col === 'select'">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox
+                                [disabled]="dataSourceInvertor.data.length === 0"
+                                (change)="$event ? masterToggle() : null"
+                                [checked]="selection.hasValue() && isAllPageSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllPageSelected()"
+                                [aria-label]="checkboxLabel()">
+                            </mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-checkbox
+                                (click)="$event.stopPropagation()"
+                                (change)="checkboxHandler($event, row)"
+                                [checked]="selection.isSelected(row)"
+                                [aria-label]="checkboxLabel(row)">
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                    <ng-container *ngIf="col === 'action'">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element">
+
+                            <div class="action-field">
+                                <button
+                                    *ngIf="filterState === 1"
+                                    mat-flat-button
+                                    (click)="openEditDialog(element, true)"
+                                    color="primary">
+                                    Редактировать
+                                </button>
+                            </div>
+
+                            <div style="opacity: 0; pointer-events: none;" class="action-field">
+                                <button
+                                    *ngIf="filterState === 2"
+                                    mat-flat-button
+                                    (click)="openEditDialog(element, true)"
+                                    color="primary">
+                                    Редактировать
+                                </button>
+                            </div>
+
+                            <div style="opacity: 0; pointer-events: none;" class="action-field">
+                                <button
+                                    *ngIf="filterState === 0"
+                                    mat-flat-button
+                                    (click)="openEditDialog(element, true)"
+                                    color="primary">
+                                    Редактировать
+                                </button>
+                            </div>
+
+                        </td>
+                    </ng-container>
+
+                    <ng-container *ngIf="col === 'startDate' || col === 'endDate'; else nodate">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{col | translate}}</th>
+                        <td mat-cell *matCellDef="let element">{{element[col] | date: 'dd.MM.yyyy'}}</td>
+                    </ng-container>
+
+                    <ng-container #nodate *ngIf="col !== 'action' && col !== 'select'">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{col | translate}}</th>
+                        <td mat-cell *matCellDef="let element">{{element[col]}}</td>
+                    </ng-container>
+
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsInvertor; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsInvertor;"></tr>
+            </table>
+        </div>
+    </div>
+
+    <mat-chip-option
+        *ngIf="showCharts > -1 && showContent"
+        selected color="primary" style="align-self: start; margin: 15px;" class="chips-state-text blue">
+        Затраты на контроллеры {{controllerPrice}}
+    </mat-chip-option>
+
+    <div *ngIf="showCharts > -1 && showContent" class="view-content-container h">
+        <div class="table-container" id="element">
+            <table mat-table [dataSource]="dataSourceController" matSort>
+                <ng-container *ngFor="let col of displayedColumnsController" [matColumnDef]="col">
+
+                    <ng-container *ngIf="col === 'select'">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox
+                                [disabled]="dataSourceController.data.length === 0"
+                                (change)="$event ? masterToggle() : null"
+                                [checked]="selection.hasValue() && isAllPageSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllPageSelected()"
+                                [aria-label]="checkboxLabel()">
+                            </mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-checkbox
+                                (click)="$event.stopPropagation()"
+                                (change)="checkboxHandler($event, row)"
+                                [checked]="selection.isSelected(row)"
+                                [aria-label]="checkboxLabel(row)">
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                    <ng-container *ngIf="col === 'action'">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element">
+
+                            <div class="action-field">
+                                <button
+                                    *ngIf="filterState === 1"
+                                    mat-flat-button
+                                    (click)="openEditDialog(element, true)"
+                                    color="primary">
+                                    Редактировать
+                                </button>
+                            </div>
+
+                            <div style="opacity: 0; pointer-events: none;" class="action-field">
+                                <button
+                                    *ngIf="filterState === 2"
+                                    mat-flat-button
+                                    (click)="openEditDialog(element, true)"
+                                    color="primary">
+                                    Редактировать
+                                </button>
+                            </div>
+
+                            <div style="opacity: 0; pointer-events: none;" class="action-field">
+                                <button
+                                    *ngIf="filterState === 0"
+                                    mat-flat-button
+                                    (click)="openEditDialog(element, true)"
+                                    color="primary">
+                                    Редактировать
+                                </button>
+                            </div>
+
+                        </td>
+                    </ng-container>
+
+                    <ng-container *ngIf="col === 'startDate' || col === 'endDate'; else nodate">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{col | translate}}</th>
+                        <td mat-cell *matCellDef="let element">{{element[col] | date: 'dd.MM.yyyy'}}</td>
+                    </ng-container>
+
+                    <ng-container #nodate *ngIf="col !== 'action' && col !== 'select'">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{col | translate}}</th>
+                        <td mat-cell *matCellDef="let element">{{element[col]}}</td>
+                    </ng-container>
+
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsController; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsController;"></tr>
+            </table>
+        </div>
+    </div>
+
+    <div *ngIf="!showContent" class="spinner-container">
+        <mat-spinner [diameter]="150"></mat-spinner>
+    </div>
+</div>
+
+

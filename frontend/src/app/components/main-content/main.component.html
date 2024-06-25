@@ -1,0 +1,15 @@
+<mat-sidenav-container class="sidenav-container">
+
+    <mat-sidenav 
+        class="table-sidenav" 
+        [ngClass]="collapsed ? 'collapsed' : ''" 
+        opened 
+        mode="side">
+        <app-table-sidenav [collapsed]="collapsed" (toggle)="collapsed = !collapsed" style="height: 100%;"></app-table-sidenav>
+    </mat-sidenav>
+
+    <mat-sidenav-content [ngClass]="collapsed ? 'collapsed-margin' : 'expanded-margin'">
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+    
+</mat-sidenav-container>

@@ -1,0 +1,71 @@
+<h1 mat-dialog-title>Вы действительно хотите
+    <span class="restore" *ngIf="data.restore">
+        восстановить<br>
+    </span>
+    <span class="delete" *ngIf="!data.restore">
+        удалить<br>
+    </span>
+    <span *ngIf="dataSource.data.length === 1">
+        запись
+    </span>
+    <span *ngIf="dataSource.data.length > 1">
+        записи
+    </span>
+    из таблицы?
+</h1>
+
+
+<mat-dialog-content class="mat-typography">
+    <div>
+        Всего: <span class="amount-selected">
+            {{dataSource.data.length}}
+            <span
+                appPluralRu=""
+                [value]="dataSource.data.length"
+                [arVariants]="['запись', 'записи', 'записей']">
+            </span>
+        </span>
+    </div>
+
+    <div class="table-view-records" *ngIf="dataSource.data.length < 11 || showPreviewTable">
+        <div class="table-container">
+            <table mat-table [dataSource]="dataSource">
+
+                <ng-container *ngFor="let col of displayedColumns" [matColumnDef]="col">
+                    <ng-container *ngIf="col === 'startDate' || col === 'endDate'; else nodate">
+                        <th mat-header-cell *matHeaderCellDef>{{col | translate}}</th>
+                        <td mat-cell *matCellDef="let element">{{element[col] | date: 'dd.MM.yyyy'}}</td>
+                    </ng-container>
+
+                    <ng-container #nodate *ngIf="col === '#'">
+                        <th mat-header-cell *matHeaderCellDef>#</th>
+                        <td mat-cell *matCellDef="let element; let ind = index">{{ind + 1}}</td>
+                    </ng-container>
+
+                    <ng-container #nodate *ngIf="col !== 'action' && col !== 'select'">
+                        <th mat-header-cell *matHeaderCellDef>{{col | translate}}</th>
+                        <td mat-cell *matCellDef="let element">{{element[col]}}</td>
+                    </ng-container>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </div>
+
+    <button
+        mat-button
+        *ngIf="dataSource.data.length > 10 && !showPreviewTable"
+        class="show-preview-table-btn"
+        (click)="showPreviewTable = !showPreviewTable">Показать все записи
+    </button>
+
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close cdkFocusInitial (click)="onCancelClick()">Отмена</button>
+    <button *ngIf="!data.restore" mat-button color="accent" mat-dialog-close (click)="onDeleteClick()">Удалить</button>
+    <button *ngIf="data.restore" mat-button color="primary" mat-dialog-close (click)="onDeleteClick()">Восстановить</button>
+</mat-dialog-actions>

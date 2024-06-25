@@ -1,0 +1,66 @@
+<div class="form-fields" [formGroup]="formGroupControl">
+
+    <mat-form-field class="create-form">
+
+        <mat-label>Введите название</mat-label>
+
+        <input matInput formControlName="name" type="text" autocomplete="off" cdkFocusInitial>
+
+        <button tabindex="-1" *ngIf="curData.name" matSuffix mat-icon-button aria-label="Clear" (click)="clearField('name')">
+            <mat-icon>close</mat-icon>
+        </button>
+
+        <mat-error *ngIf="formGroupControl.controls.name.hasError('required')">
+            Необходимо заполнить это поле
+        </mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field class="create-form">
+
+        <mat-label>Введите время начала</mat-label>
+
+        <input matInput formControlName="startTime" type="text" autocomplete="off" cdkFocusInitial>
+
+        <button tabindex="-1" *ngIf="curData.startTime" matSuffix mat-icon-button aria-label="Clear" (click)="clearField('startTime')">
+            <mat-icon>close</mat-icon>
+        </button>
+
+        <mat-error *ngIf="formGroupControl.controls.startTime.hasError('required')">
+            Необходимо заполнить это поле
+        </mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field class="create-form">
+
+        <mat-label>Введите длительность</mat-label>
+
+        <input matInput formControlName="duration" type="text" autocomplete="off" cdkFocusInitial>
+
+        <button tabindex="-1" *ngIf="curData.duration" matSuffix mat-icon-button aria-label="Clear" (click)="clearField('duration')">
+            <mat-icon>close</mat-icon>
+        </button>
+
+        <mat-error *ngIf="formGroupControl.controls.duration.hasError('required')">
+            Необходимо заполнить это поле
+        </mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field class="create-form">
+
+        <mat-label>Введите мощность</mat-label>
+
+        <input matInput formControlName="watt" type="text" autocomplete="off" cdkFocusInitial>
+
+        <button tabindex="-1" *ngIf="curData.watt" matSuffix mat-icon-button aria-label="Clear" (click)="clearField('watt')">
+            <mat-icon>close</mat-icon>
+        </button>
+
+        <mat-error *ngIf="formGroupControl.controls.watt.hasError('required')">
+            Необходимо заполнить это поле
+        </mat-error>
+
+    </mat-form-field>
+</div>

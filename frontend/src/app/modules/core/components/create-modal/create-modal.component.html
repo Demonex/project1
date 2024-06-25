@@ -1,0 +1,110 @@
+<h1 *ngIf="!data.edit" mat-dialog-title>Создание записи в таблице<br>
+    <span class="tablename-color">{{data.tableName}}</span></h1>
+<h1 *ngIf="data.edit" mat-dialog-title>Редактирование записи в таблице<br>
+    <span class="tablename-color">{{data.tableName}}</span></h1>
+
+
+
+<mat-dialog-content [ngClass]="uploadedOnService ? 'hidden' : ''">
+    <ng-template #edit></ng-template>
+
+    <ng-template #noedit ></ng-template>
+
+    <ng-template #device></ng-template>
+
+    <div [ngClass]="data.tableName !== 'Устройства' || data.edit ? 'hidden' : ''">
+        <mat-tab-group mat-align-tabs="center">
+
+            <!-- <mat-tab label="Вручную" [disabled]="uploaded"> -->
+                <!-- <div style="height: 10px;"></div> -->
+                <!-- <ng-template #device></ng-template> -->
+            <!-- </mat-tab> -->
+
+            <!-- <mat-tab label="Из файла">
+                <div style="height: 10px;"></div>
+
+                <label class="drop-zone"
+                    DropZone
+                    (hovered)="toggleHover($event)"
+                    (dropped)="startUpload($event)"
+                    [class.hovering]="isHovering">
+
+                    <p *ngIf="!uploaded">Перетащите .xls/.xlsx файл сюда</p>
+                    <div class="file" *ngIf="!uploaded">
+                        <input id="input" class="file-input" type="file" (change)="startUpload($event.target.files[0])">
+
+                        <div class="file-cta" >
+                            <span class="file-upload-text">
+                                <mat-icon>cloud_upload</mat-icon>
+                                <span style="margin-left: 7px; font-weight: 500;">
+                                    или выберите файл...
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div *ngIf="uploaded" class="dropzone-file-info">
+                        <mat-icon class="close-file-icon" (click)="removeFile($event)">close</mat-icon>
+                        <span class="file-name">
+                            {{file?.name + "/" + file?.size + "байт"}}
+                        </span>
+                    </div>
+                </label>
+
+                <mat-progress-bar *ngIf="uploading" mode="indeterminate"></mat-progress-bar>
+
+            </mat-tab> -->
+
+        </mat-tab-group>
+    </div>
+
+</mat-dialog-content>
+
+<mat-dialog-content [ngClass]="uploadedOnService ? '' : 'hidden'">
+
+    <div *ngIf="!error">
+        Успешно
+        <span
+            appPluralRu=""
+            [value]="recordsNumber"
+            [arVariants]="['загружена', 'загружено']">
+        </span>
+        <span style="color: var(--primary); font-weight: 500;">
+            {{recordsNumber}}
+            <span
+                appPluralRu=""
+                [value]="recordsNumber"
+                [arVariants]="['запись', 'записи', 'записей']">
+            </span>
+        </span>
+    </div>
+
+    <div *ngIf="error" style="color: var(--accent-color); font-weight: 500">
+        Неожиданная ошибка при загрузке записей
+    </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+
+    <button mat-button [disabled]="uploading || uploadedOnService && !error" (click)="onCloseClick()">Отмена</button>
+
+    <button
+        *ngIf="!data.edit"
+        mat-button
+        color="primary"
+        [disabled]="!valid && !uploaded || uploading || error"
+        (click)="onSaveClick()">
+        Сохранить
+    </button>
+
+    <button
+        *ngIf="data.edit"
+        mat-button
+        color="primary"
+        [disabled]="!valid"
+        (click)="onUpdateClick()">
+        Сохранить
+    </button>
+
+</mat-dialog-actions>

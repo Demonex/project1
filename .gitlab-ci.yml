@@ -1,0 +1,43 @@
+stages:
+  - build
+  - publish
+  - deploy
+
+# ------------------------------------ BUILD --------------------------------------
+delivery_service_build:
+  stage: build
+  script:
+    # - . scripts/build.sh delivery_service backend/WebServices/DeliveryWebService backend/
+    - docker build -t $REGISTRY_ADDRESS/delivery_service:$CI_PIPELINE_ID -f backend/WebServices/DeliveryWebService/Dockerfile backend/
+
+frontend_build:
+  stage: build
+  script:
+    # - . scripts/build.sh frontend frontend frontend/
+    - docker build -t $REGISTRY_ADDRESS/frontend:$CI_PIPELINE_ID -f frontend/Dockerfile frontend/
+
+
+# ----------------------------------- PUBLISH -------------------------------------
+delivery_service_publish:
+  stage: publish
+  script:
+    # - . scripts/publish.sh delivery_service
+    - docker login $REGISTRY_ADDRESS -u $REGISTRY_LOGIN -p $REGISTRY_PASSWORD
+    - docker push $REGISTRY_ADDRESS/delivery_service:$CI_PIPELINE_ID
+
+frontend_publish:
+  stage: publish
+  script:
+    # - . scripts/publish.sh frontend
+    - docker login $REGISTRY_ADDRESS -u $REGISTRY_LOGIN -p $REGISTRY_PASSWORD
+    - docker push $REGISTRY_ADDRESS/frontend:$CI_PIPELINE_ID
+
+# ----------------------------------- DEPLOY --------------------------------------
+deploy:
+  stage: deploy
+  environment:
+    name: $CI_COMMIT_REF_NAME
+  script:
+    # - bash scripts/remote_deploy.sh
+    - sshpass -p $DEPLOY_HOST_USER_PASSWORD scp -o StrictHostKeyChecking=no docker-compose.yml $DEPLOY_HOST_ADDRESS
+    # - sshpass -p $DEPLOY_HOST_USER_PASSWORD ssh -o StrictHostKeyChecking=no $DEPLOY_HOST_ADDRESS bash -s < ./scripts/deploy.sh

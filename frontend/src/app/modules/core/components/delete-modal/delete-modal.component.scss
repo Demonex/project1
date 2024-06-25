@@ -1,0 +1,44 @@
+.amount-selected {
+    color: var(--primary);
+    font-weight: 500;
+}
+
+table {
+    width: 100%;
+}
+
+mat-dialog-content {
+    margin-top: 21px;
+    margin-bottom: 13px;
+    display: flex;
+}
+
+td.mat-cell {
+    padding-right: 50px;
+}
+
+.show-preview-table-btn {
+    margin: 0 auto;
+}
+
+.table-view-records {
+    width: 100%;
+    margin-bottom: 1px;
+}
+
+.delete {
+    color: rgb(255, 64, 129);
+}
+
+.restore {
+    color: var(--primary);
+}
+
+.mat-typography {
+    flex-direction: column;
+    gap: 15px;
+}
+
+.mdc-dialog__actions {
+    min-height: 60px;
+}

@@ -1,0 +1,29 @@
+.sidenav-container {
+    height: 100%;
+    flex: 1;
+}
+
+.table-sidenav {
+    width: 240px;
+    transition: width 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.collapsed {
+    width: 67px;
+}
+
+.collapsed-margin {
+    margin-left: 67px !important;
+}
+
+.expanded-margin {
+    margin-left: 240px !important;
+    overflow-x: hidden;
+}
+
+mat-sidenav-content {
+    transition: margin 0.3s;
+}

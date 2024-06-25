@@ -1,0 +1,532 @@
+<mat-accordion [formGroup]="formGroupControl" multi>
+
+    <mat-expansion-panel #panel1>
+        <mat-expansion-panel-header tabindex="-1">
+            <mat-panel-title>
+                Фильтр по названию
+            </mat-panel-title>
+
+            <mat-panel-description
+                [ngClass]="!panel1.expanded && names?.length > 0
+                           ? 'show-chips-count' : 'hide-chips-count'">
+
+                <mat-chip
+                    *ngIf="namesLen > 0"
+                    class="primary-chips-count"
+                    color="primary"
+                    selected
+                    (click)="togglePanel(panel1)">
+                    {{namesLen}}
+                </mat-chip>
+
+                <mat-chip
+                    *ngIf="names?.length - namesLen > 0"
+                    class="chips-count"
+                    (click)="togglePanel(panel1)">
+                    {{names?.length - namesLen}}
+                </mat-chip>
+
+            </mat-panel-description>
+
+        </mat-expansion-panel-header>
+
+        <mat-form-field style="width: 100%">
+            <mat-label>Введите название</mat-label>
+
+            <mat-chip-grid #chipsList1>
+
+                <mat-chip-row
+                    *ngFor="let name of names; let ind = index"
+                    [ngClass]="{'primary-chips': ind < namesLen, 'base-chips': ind >= namesLen}"
+                    (removed)="remove('name', name)">
+                    {{name}}
+                    <mat-icon [ngClass]="{'primary-close': ind < namesLen}" matChipRemove>cancel</mat-icon>
+                </mat-chip-row>
+
+                <input
+                    id="name"
+                    formControlName="name"
+                    placeholder="Введите..."
+                    autocomplete="off"
+                    [matChipInputFor]="chipsList1"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="add($event)">
+
+            </mat-chip-grid>
+
+            <button
+                *ngIf="formGroupControl.controls.name.value || names.length"
+                tabindex="-1"
+                matSuffix
+                mat-icon-button
+                (click)="clearField('name')">
+                <mat-icon>close</mat-icon>
+            </button>
+
+        </mat-form-field>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel #panel8>
+        <mat-expansion-panel-header tabindex="-1">
+            <mat-panel-title>
+                Фильтр по типу
+            </mat-panel-title>
+
+            <mat-panel-description
+                [ngClass]="!panel8.expanded && types?.length > 0
+                           ? 'show-chips-count' : 'hide-chips-count'">
+
+                <mat-chip
+                    *ngIf="typesLen > 0"
+                    class="primary-chips-count"
+                    color="primary"
+                    selected
+                    (click)="togglePanel(panel8)">
+                    {{typesLen}}
+                </mat-chip>
+
+                <mat-chip
+                    *ngIf="types?.length - typesLen > 0"
+                    class="chips-count"
+                    (click)="togglePanel(panel8)">
+                    {{types?.length - typesLen}}
+                </mat-chip>
+
+            </mat-panel-description>
+
+        </mat-expansion-panel-header>
+
+        <mat-form-field style="width: 100%">
+            <mat-label>Введите тип панели</mat-label>
+
+            <mat-chip-grid #chipsList8>
+
+                <mat-chip-row
+                    *ngFor="let type of types; let ind = index"
+                    [ngClass]="{'primary-chips': ind < typesLen, 'base-chips': ind >= typesLen}"
+                    (removed)="remove('type', type)">
+                    {{type}}
+                    <mat-icon [ngClass]="{'primary-close': ind < typesLen}" matChipRemove>cancel</mat-icon>
+                </mat-chip-row>
+
+                <input
+                    id="type"
+                    formControlName="type"
+                    placeholder="Введите..."
+                    autocomplete="off"
+                    [matChipInputFor]="chipsList8"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="add($event)">
+
+            </mat-chip-grid>
+
+            <button
+                *ngIf="formGroupControl.controls.type.value || types.length"
+                tabindex="-1"
+                matSuffix
+                mat-icon-button
+                (click)="clearField('type')">
+                <mat-icon>close</mat-icon>
+            </button>
+
+        </mat-form-field>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel #panel2>
+        <mat-expansion-panel-header tabindex="-1">
+            <mat-panel-title>
+                Фильтр по мощности
+            </mat-panel-title>
+
+            <mat-panel-description
+                [ngClass]="!panel2.expanded && watts?.length > 0
+                           ? 'show-chips-count' : 'hide-chips-count'">
+
+                <mat-chip
+                    *ngIf="wattsLen > 0"
+                    class="primary-chips-count"
+                    color="primary"
+                    selected
+                    (click)="togglePanel(panel2)">
+                    {{wattsLen}}
+                </mat-chip>
+
+                <mat-chip
+                    *ngIf="watts?.length - wattsLen > 0"
+                    class="chips-count"
+                    (click)="togglePanel(panel2)">
+                    {{watts?.length - wattsLen}}
+                </mat-chip>
+
+            </mat-panel-description>
+
+        </mat-expansion-panel-header>
+
+        <mat-form-field style="width: 100%">
+            <mat-label>Введите мощность</mat-label>
+
+            <mat-chip-grid #chipsList2>
+
+                <mat-chip-row
+                    *ngFor="let watt of watts; let ind = index"
+                    [ngClass]="{'primary-chips': ind < wattsLen, 'base-chips': ind >= wattsLen}"
+                    (removed)="remove('watt', watt)">
+                    {{watt}}
+                    <mat-icon [ngClass]="{'primary-close': ind < wattsLen}" matChipRemove>cancel</mat-icon>
+                </mat-chip-row>
+
+                <input
+                    id="watt"
+                    formControlName="watt"
+                    placeholder="Введите..."
+                    autocomplete="off"
+                    [matChipInputFor]="chipsList2"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="add($event)">
+
+            </mat-chip-grid>
+
+            <button
+                *ngIf="formGroupControl.controls.watt.value || watts.length"
+                tabindex="-1"
+                matSuffix
+                mat-icon-button
+                (click)="clearField('watt')">
+                <mat-icon>close</mat-icon>
+            </button>
+
+        </mat-form-field>
+    </mat-expansion-panel>
+
+    <!-- <mat-expansion-panel #panel3>
+        <mat-expansion-panel-header tabindex="-1">
+            <mat-panel-title>
+                Фильтр по напряжению
+            </mat-panel-title>
+
+            <mat-panel-description
+                [ngClass]="!panel3.expanded && volts?.length > 0
+                           ? 'show-chips-count' : 'hide-chips-count'">
+
+                <mat-chip
+                    *ngIf="voltsLen > 0"
+                    class="primary-chips-count"
+                    color="primary"
+                    selected
+                    (click)="togglePanel(panel3)">
+                    {{voltsLen}}
+                </mat-chip>
+
+                <mat-chip
+                    *ngIf="volts?.length - voltsLen > 0"
+                    class="chips-count"
+                    (click)="togglePanel(panel3)">
+                    {{volts?.length - voltsLen}}
+                </mat-chip>
+
+            </mat-panel-description>
+
+        </mat-expansion-panel-header>
+
+        <mat-form-field style="width: 100%">
+            <mat-label>Введите напряжение</mat-label>
+
+            <mat-chip-grid #chipsList3>
+
+                <mat-chip-row
+                    *ngFor="let volt of volts; let ind = index"
+                    [ngClass]="{'primary-chips': ind < voltsLen, 'base-chips': ind >= voltsLen}"
+                    (removed)="remove('volt', volt)">
+                    {{volt}}
+                    <mat-icon [ngClass]="{'primary-close': ind < voltsLen}" matChipRemove>cancel</mat-icon>
+                </mat-chip-row>
+
+                <input
+                    id="volt"
+                    formControlName="volt"
+                    placeholder="Введите..."
+                    autocomplete="off"
+                    [matChipInputFor]="chipsList3"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="add($event)">
+
+            </mat-chip-grid>
+
+            <button
+                *ngIf="formGroupControl.controls.volt.value || volts.length"
+                tabindex="-1"
+                matSuffix
+                mat-icon-button
+                (click)="clearField('volt')">
+                <mat-icon>close</mat-icon>
+            </button>
+
+        </mat-form-field>
+    </mat-expansion-panel>
+    <mat-expansion-panel #panel4>
+        <mat-expansion-panel-header tabindex="-1">
+            <mat-panel-title>
+                Фильтр по силе тока
+            </mat-panel-title>
+
+            <mat-panel-description
+                [ngClass]="!panel4.expanded && ampers?.length > 0
+                           ? 'show-chips-count' : 'hide-chips-count'">
+
+                <mat-chip
+                    *ngIf="ampersLen > 0"
+                    class="primary-chips-count"
+                    color="primary"
+                    selected
+                    (click)="togglePanel(panel4)">
+                    {{ampersLen}}
+                </mat-chip>
+
+                <mat-chip
+                    *ngIf="ampers?.length - ampersLen > 0"
+                    class="chips-count"
+                    (click)="togglePanel(panel4)">
+                    {{ampers?.length - ampersLen}}
+                </mat-chip>
+
+            </mat-panel-description>
+
+        </mat-expansion-panel-header>
+
+        <mat-form-field style="width: 100%">
+            <mat-label>Введите название</mat-label>
+
+            <mat-chip-grid #chipsList4>
+
+                <mat-chip-row
+                    *ngFor="let amper of ampers; let ind = index"
+                    [ngClass]="{'primary-chips': ind < ampersLen, 'base-chips': ind >= ampersLen}"
+                    (removed)="remove('amper', amper)">
+                    {{amper}}
+                    <mat-icon [ngClass]="{'primary-close': ind < ampersLen}" matChipRemove>cancel</mat-icon>
+                </mat-chip-row>
+
+                <input
+                    id="amper"
+                    formControlName="amper"
+                    placeholder="Введите..."
+                    autocomplete="off"
+                    [matChipInputFor]="chipsList4"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="add($event)">
+
+            </mat-chip-grid>
+
+            <button
+                *ngIf="formGroupControl.controls.amper.value || ampers.length"
+                tabindex="-1"
+                matSuffix
+                mat-icon-button
+                (click)="clearField('amper')">
+                <mat-icon>close</mat-icon>
+            </button>
+
+        </mat-form-field>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel #panel5>
+        <mat-expansion-panel-header tabindex="-1">
+            <mat-panel-title>
+                Фильтр по КПД
+            </mat-panel-title>
+
+            <mat-panel-description
+                [ngClass]="!panel5.expanded && effs?.length > 0
+                           ? 'show-chips-count' : 'hide-chips-count'">
+
+                <mat-chip
+                    *ngIf="effsLen > 0"
+                    class="primary-chips-count"
+                    color="primary"
+                    selected
+                    (click)="togglePanel(panel5)">
+                    {{effsLen}}
+                </mat-chip>
+
+                <mat-chip
+                    *ngIf="effs?.length - effsLen > 0"
+                    class="chips-count"
+                    (click)="togglePanel(panel5)">
+                    {{effs?.length - effsLen}}
+                </mat-chip>
+
+            </mat-panel-description>
+
+        </mat-expansion-panel-header>
+
+        <mat-form-field style="width: 100%">
+            <mat-label>Введите КПД</mat-label>
+
+            <mat-chip-grid #chipsList5>
+
+                <mat-chip-row
+                    *ngFor="let eff of effs; let ind = index"
+                    [ngClass]="{'primary-chips': ind < effsLen, 'base-chips': ind >= effsLen}"
+                    (removed)="remove('eff', eff)">
+                    {{eff}}
+                    <mat-icon [ngClass]="{'primary-close': ind < effsLen}" matChipRemove>cancel</mat-icon>
+                </mat-chip-row>
+
+                <input
+                    id="eff"
+                    formControlName="eff"
+                    placeholder="Введите..."
+                    autocomplete="off"
+                    [matChipInputFor]="chipsList5"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="add($event)">
+
+            </mat-chip-grid>
+
+            <button
+                *ngIf="formGroupControl.controls.eff.value || effs.length"
+                tabindex="-1"
+                matSuffix
+                mat-icon-button
+                (click)="clearField('eff')">
+                <mat-icon>close</mat-icon>
+            </button>
+
+        </mat-form-field>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel #panel6>
+        <mat-expansion-panel-header tabindex="-1">
+            <mat-panel-title>
+                Фильтр по площади панели
+            </mat-panel-title>
+
+            <mat-panel-description
+                [ngClass]="!panel6.expanded && sizes?.length > 0
+                           ? 'show-chips-count' : 'hide-chips-count'">
+
+                <mat-chip
+                    *ngIf="sizesLen > 0"
+                    class="primary-chips-count"
+                    color="primary"
+                    selected
+                    (click)="togglePanel(panel6)">
+                    {{sizesLen}}
+                </mat-chip>
+
+                <mat-chip
+                    *ngIf="sizes?.length - sizesLen > 0"
+                    class="chips-count"
+                    (click)="togglePanel(panel6)">
+                    {{sizes?.length - sizesLen}}
+                </mat-chip>
+
+            </mat-panel-description>
+
+        </mat-expansion-panel-header>
+
+        <mat-form-field style="width: 100%">
+            <mat-label>Введите площадь панели</mat-label>
+
+            <mat-chip-grid #chipsList6>
+
+                <mat-chip-row
+                    *ngFor="let size of sizes; let ind = index"
+                    [ngClass]="{'primary-chips': ind < sizesLen, 'base-chips': ind >= sizesLen}"
+                    (removed)="remove('size', size)">
+                    {{size}}
+                    <mat-icon [ngClass]="{'primary-close': ind < sizesLen}" matChipRemove>cancel</mat-icon>
+                </mat-chip-row>
+
+                <input
+                    id="size"
+                    formControlName="size"
+                    placeholder="Введите..."
+                    autocomplete="off"
+                    [matChipInputFor]="chipsList6"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="add($event)">
+
+            </mat-chip-grid>
+
+            <button
+                *ngIf="formGroupControl.controls.size.value || sizes.length"
+                tabindex="-1"
+                matSuffix
+                mat-icon-button
+                (click)="clearField('size')">
+                <mat-icon>close</mat-icon>
+            </button>
+
+        </mat-form-field>
+    </mat-expansion-panel> -->
+
+    <mat-expansion-panel #panel7>
+        <mat-expansion-panel-header tabindex="-1">
+            <mat-panel-title>
+                Фильтр по стоимости
+            </mat-panel-title>
+
+            <mat-panel-description
+                [ngClass]="!panel7.expanded && prices?.length > 0
+                           ? 'show-chips-count' : 'hide-chips-count'">
+
+                <mat-chip
+                    *ngIf="pricesLen > 0"
+                    class="primary-chips-count"
+                    color="primary"
+                    selected
+                    (click)="togglePanel(panel7)">
+                    {{pricesLen}}
+                </mat-chip>
+
+                <mat-chip
+                    *ngIf="prices?.length - pricesLen > 0"
+                    class="chips-count"
+                    (click)="togglePanel(panel7)">
+                    {{prices?.length - pricesLen}}
+                </mat-chip>
+
+            </mat-panel-description>
+
+        </mat-expansion-panel-header>
+
+        <mat-form-field style="width: 100%">
+            <mat-label>Введите стоимость</mat-label>
+
+            <mat-chip-grid #chipsList7>
+
+                <mat-chip-row
+                    *ngFor="let price of prices; let ind = index"
+                    [ngClass]="{'primary-chips': ind < pricesLen, 'base-chips': ind >= pricesLen}"
+                    (removed)="remove('price', price)">
+                    {{price}}
+                    <mat-icon [ngClass]="{'primary-close': ind < pricesLen}" matChipRemove>cancel</mat-icon>
+                </mat-chip-row>
+
+                <input
+                    id="price"
+                    formControlName="price"
+                    placeholder="Введите..."
+                    autocomplete="off"
+                    [matChipInputFor]="chipsList7"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="add($event)">
+
+            </mat-chip-grid>
+
+            <button
+                *ngIf="formGroupControl.controls.price.value || prices.length"
+                tabindex="-1"
+                matSuffix
+                mat-icon-button
+                (click)="clearField('price')">
+                <mat-icon>close</mat-icon>
+            </button>
+
+        </mat-form-field>
+    </mat-expansion-panel>
+
+    <mat-autocomplete #none="matAutocomplete"></mat-autocomplete>
+
+</mat-accordion>

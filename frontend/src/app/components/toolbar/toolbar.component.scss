@@ -1,0 +1,24 @@
+.toolbar-content {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-company-name {
+    display: flex;
+    align-items: center;
+    margin-left: 3px;
+    font-size: 21px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    font-style: italic;
+}
+
+.mat-toolbar-single-row {
+    height: 50px;
+    padding: 0 50px 0 13px;
+}
+
+.qoollo-logo {
+    width: 170px;
+    margin-top: 5px;
+}
