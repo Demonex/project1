@@ -9,5 +9,4 @@ backend/Common/DeliveryDbAutoMapper/obj/*
 backend/Common/Dto/bin/*
 backend/Common/Dto/obj/*
 *.dll
-*.sln
 **/.idea/
